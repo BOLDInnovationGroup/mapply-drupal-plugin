@@ -1,0 +1,144 @@
+<?php
+
+function mapply_menu() {
+  $items = array();
+  $items["admin/mapply"] = array(
+    'title' => 'Mapply Settings',
+    'description' => 'Mapply Settings form',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('mapply_form'),
+    'access callback' => array('administer mapply'),
+  );
+  return $items;
+}
+
+function mapply_permission() {
+  return array(
+    'administer mapply' => array(
+      'title' => t('Administer Mapply Settings'),
+      'description' => t('Users with this permission will be able to administer the Mapply settings page'),
+    ),
+  );
+}
+
+function mapply_form($form, &$form_state) {
+  $form['mapply_api_key'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Mapply API Key',
+    '#size' => 45,
+    '#maxlength' => 60,
+    '#required' => TRUE,
+    '#default_value' => variable_get('mapply_api_key'),
+  );
+  $form['mapply_google_api_key'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Google API Key used for Mapply',
+    '#size' => 45,
+    '#maxlength' => 60,
+    '#required' => TRUE,
+    '#default_value' => variable_get('mapply_google_api_key'),
+  );
+  $form['mapply_display_powered_by'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Display Powered by message',
+    '#default_value' => variable_get('mapply_display_powered_by'),
+  );
+  $form['mapply_form_submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+  return $form;
+}
+
+function mapply_form_validate($form, &$form_state) {
+  
+}
+
+function mapply_form_submit($form, &$form_state) {
+  variable_set("mapply_api_key", $form_state['values']['mapply_api_key']);
+  variable_set("mapply_google_api_key", $form_state['values']['mapply_google_api_key']);
+  variable_set("mapply_display_powered_by", $form_state['values']['mapply_display_powered_by']);
+var_dump(variable_get("mapply_display_powered_by"));
+  if(variable_get("mapply_display_powered_by")) {
+$url = "https://app.mapply.net/front-end/frontend_json.php?api_key=" . variable_get("mapply_api_key") . "&action=get_powered_by";
+    $channel = curl_init($url);
+    curl_setopt($channel, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($channel, CURLOPT_CONNECTTIMEOUT, 5);
+    $data = curl_exec($channel);
+    $data = json_decode($data);
+    variable_set("mapply_powered_by", $data->powered_by);
+  }
+  mapply_form($form, $form_state);
+}
+
+/**
+ * Implementation of hook_shortcode_info().
+ * Using the same formatting as hook_filter_info()
+ */
+function mapply_shortcode_info() {
+  $shortcodes['mapply'] = array(
+    'title' => t('Mapply'),
+    'description' => t('Replace the given text formatted like as a mapply.'),
+    'process callback' => 'mapply_shortcode_mapply',
+    //'settings callback' => '_shortcode_settings_form', TODO
+    'attributes callback' => 'mapply_mapply_attributes',
+    'tips callback' => 'mapply_shortcode_mapply_tip',
+  );
+  return $shortcodes;
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function mapply_theme() {
+  return array(
+    'shortcode_mapply' => array(
+      'variables' => array('mapply_api_key' => variable_get('mapply_api_key'), 'google_api_key' => variable_get('google_api_key'), 'class' => 'mapply'),
+    ),
+  );
+}
+
+/**
+ *
+ * Replace a given text with a Mapply a map.
+ *
+ * @param $attrs
+ * @param $text
+ */
+function mapply_shortcode_mapply($attrs, $text) {
+  $attrs = shortcode_attrs(array(
+      'class' => 'mapply',
+    ),
+    $attrs
+  );
+
+  $class = shortcode_add_class($attrs['class'], 'mapply');
+  return theme('shortcode_mapply', array('class' => $class));
+}
+
+function theme_shortcode_mapply($vars) {
+  if(variable_get("mapply_api_key") == "" && variable_get("mapply_google_api_key") == "") {
+    return "Please setup your mapply api key and google api key";
+  } else {
+    $link = "";
+    if(variable_get("mapply_display_powered_by")) {
+      $link = variable_get("mapply_powered_by");
+    }
+    return '<script id="locator" type="text/javascript" src="https://app.mapply.net/front-end/js/locator.js" data-path="//app.mapply.net/front-end/" data-api-key="' . variable_get("mapply_api_key") . '" data-maps-api-key="' . variable_get("mapply_google_api_key") . '" ></script>' . $link;
+  }
+}
+
+function mapply_shortcode_mapply_tip($format, $long) {
+  $output = array();
+  $output[] = '<p><strong>' . t('[mapply/]') . '</strong> ';
+  if ($long) {
+    $output[] = t('Displays a Mapply map.') . '</p>';
+  }
+  else {
+    $output[] = t('Displays a Mapply map on your site.  This map is loaded via JavaScript and so can be styled using the sites css.') . '</p>';
+  }
+
+  return implode(' ', $output);
+}
+
+function mapply_mapply_attributes() {}

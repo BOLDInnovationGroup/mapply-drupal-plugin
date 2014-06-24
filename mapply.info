@@ -1,0 +1,6 @@
+name = Mapply
+description = Displays the Mapply map on your site using a [mapply] shortcode.
+dependencies[] = shortcode
+package = Mapply
+core = 7.x
+configure = admin/mapply
