@@ -7,7 +7,7 @@ function mapply_menu() {
     'description' => 'Mapply Settings form',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('mapply_form'),
-    'access callback' => array('administer mapply'),
+    'access arguments' => array('administer mapply'),
   );
   return $items;
 }
