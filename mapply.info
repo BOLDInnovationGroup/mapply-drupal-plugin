@@ -4,3 +4,4 @@ dependencies[] = shortcode
 package = Mapply
 core = 7.x
 configure = admin/mapply
+permissions=admin/people/permissions#module-mapply

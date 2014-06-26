@@ -1,0 +1,18 @@
+#content {
+    width: 840px;
+}
+.header {
+    background:url('../imgs/banner-bg.jpg') no-repeat;
+}
+.logo {
+  padding: 15px;
+  display: block;
+}
+.instructions {
+  margin-top:5px;
+}
+hr {
+  margin:15px 0;
+  border-top: 1px solid #F1F1F1;
+  clear:both;
+}

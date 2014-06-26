@@ -21,6 +21,22 @@ function mapply_permission() {
   );
 }
 
+function mapply_overlay_child_initialize() {
+  drupal_add_css(drupal_get_path("module", "mapply") . "/css/mapply.css");
+}
+
+function mapply_page_build(&$page) {
+    $path = current_path();
+    if($path == "admin/mapply") {
+        $page["content"]["#sorted"] = false;
+        $page["content"]["disclaimer"] = array("#markup"=>"<div class=\"wrap ui segment purple\"><div class=\"header\"><img class=\"logo\" src=\"\\" . drupal_get_path("module", "mapply") . "/imgs/logo2.png\"/></div><hr />" .
+        "<div class=\"instructions\"><p>Step 1 - First we'll need to have a Mapply account. If you don't have one already, you can sign up for a <a href=\"http://mapply.net\">free 30 day trial here!</a> :-)</p>" .
+        "<p>Step 2 - Once you're signed up and inside your Mapply account, navigate to the <a href=\"https://app.mapply.net/settings.php\">API setup page</a> to grab your Mapply and Google Map API keys to populate the fields below.</p>" .
+        "<p>Step 3 - Once you have all of your <a href=\"https://app.mapply.net/admin.php\">stores setup</a> in your Mapply account, you can insert your map on any page by using the [mapply/] shortcode.</p>" .
+        "</div></div>", "#weight" =>0 );
+    }
+}
+
 function mapply_form($form, &$form_state) {
   $form['mapply_api_key'] = array(
     '#type' => 'textfield',
@@ -45,7 +61,7 @@ function mapply_form($form, &$form_state) {
   );
   $form['mapply_form_submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save'),
+    '#value' => t('Save Settings'),
   );
   return $form;
 }
@@ -58,9 +74,9 @@ function mapply_form_submit($form, &$form_state) {
   variable_set("mapply_api_key", $form_state['values']['mapply_api_key']);
   variable_set("mapply_google_api_key", $form_state['values']['mapply_google_api_key']);
   variable_set("mapply_display_powered_by", $form_state['values']['mapply_display_powered_by']);
-var_dump(variable_get("mapply_display_powered_by"));
+
   if(variable_get("mapply_display_powered_by")) {
-$url = "https://app.mapply.net/front-end/frontend_json.php?api_key=" . variable_get("mapply_api_key") . "&action=get_powered_by";
+    $url = "https://app.mapply.net/front-end/frontend_json.php?api_key=" . variable_get("mapply_api_key") . "&action=get_powered_by";
     $channel = curl_init($url);
     curl_setopt($channel, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($channel, CURLOPT_CONNECTTIMEOUT, 5);
@@ -80,7 +96,6 @@ function mapply_shortcode_info() {
     'title' => t('Mapply'),
     'description' => t('Replace the given text formatted like as a mapply.'),
     'process callback' => 'mapply_shortcode_mapply',
-    //'settings callback' => '_shortcode_settings_form', TODO
     'attributes callback' => 'mapply_mapply_attributes',
     'tips callback' => 'mapply_shortcode_mapply_tip',
   );
