@@ -4,6 +4,15 @@
 .header {
     background:url('../imgs/banner-bg.jpg') no-repeat;
 }
+
+.mapply.configure {
+    min-width:900px;
+    min-height:600px;
+}
+.mapply.configure iframe {
+    min-width:900px;
+    min-height:600px;
+}
 .logo {
   padding: 15px;
   display: block;
