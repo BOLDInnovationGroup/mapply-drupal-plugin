@@ -1,16 +1,24 @@
 #content {
     width: 840px;
 }
+
+.mapply .header img {
+    height:35px;
+    margin-top:16px;
+    margin-left:75px;
+}
 .header {
     background:url('../imgs/banner-bg.jpg') no-repeat;
+    height:75px;
+    margin-right:auto;
 }
 
 .mapply.configure {
-    min-width:900px;
+    min-width:1200px;
     min-height:600px;
 }
 .mapply.configure iframe {
-    min-width:900px;
+    min-width:1200px;
     min-height:600px;
 }
 .logo {
