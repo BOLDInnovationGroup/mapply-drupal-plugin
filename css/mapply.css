@@ -1,5 +1,5 @@
 #content {
-    width: 840px;
+    width: 1200px;
 }
 
 .mapply .header img {
@@ -7,10 +7,11 @@
     margin-top:16px;
     margin-left:75px;
 }
-.header {
+.mapply .header {
     background:url('../imgs/banner-bg.jpg') no-repeat;
     height:75px;
     margin-right:auto;
+    margin-top:-20px;
 }
 
 .mapply.configure {
