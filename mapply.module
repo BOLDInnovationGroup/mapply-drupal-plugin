@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * 
+ * Hook menu implementation.
+ * 
+ */
 function mapply_menu() {
   $items = array();
   $items['admin/mapply'] = array(
@@ -28,10 +33,20 @@ function mapply_menu() {
   return $items;
 }
 
+/**
+ * 
+ * Page callback function required for the mapply configuration url.
+ * 
+ */
 function mapply_configuration() {
   return array();
 }
 
+/**
+ * 
+ * Permission hook implementation.  Define the administer mapply permission which is required to see the admin pages for mapply.
+ * 
+ */
 function mapply_permission() {
   return array(
       'administer mapply' => array(
@@ -41,10 +56,20 @@ function mapply_permission() {
   );
 }
 
+/**
+ * 
+ * Hook overlay child initialize implementation.  Ensure the mapply CSS is loaded on the overlay.
+ * 
+ */
 function mapply_overlay_child_initialize() {
   drupal_add_css(drupal_get_path('module', 'mapply') . '/css/mapply.css');
 }
 
+/**
+ * 
+ * Hook page build implementation.  Ensure the Mapply content is loaded only on the mapply admin urls.
+ * 
+ */
 function mapply_page_build(&$page) {
   global $base_url;
   $path = current_path();
@@ -77,6 +102,11 @@ function mapply_page_build(&$page) {
   }
 }
 
+/**
+ * 
+ * Hook form implementation.  Add Mapply form elements to the form.
+ * 
+ */
 function mapply_form($form, &$form_state) {
   $form['mapply_api_key'] = array(
     '#type'           => 'textfield',
@@ -106,11 +136,23 @@ function mapply_form($form, &$form_state) {
   return $form;
 }
 
+/**
+ * 
+ * Hook install implementation.
+ * 
+ */
 function mapply_install() {
   variable_set('mapply_display_powered_by', true);
   update_powered_by_message();
 }
 
+/**
+ * 
+ * Handles form submission
+ * 
+ * @param $form
+ * @param $form_state
+ */
 function mapply_form_submit($form, &$form_state) {
   variable_set('mapply_api_key', $form_state['values']['mapply_api_key']);
   variable_set('mapply_google_api_key', $form_state['values']['mapply_google_api_key']);
