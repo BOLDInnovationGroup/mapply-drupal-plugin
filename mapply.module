@@ -46,12 +46,13 @@ function mapply_overlay_child_initialize() {
 }
 
 function mapply_page_build(&$page) {
+  global $base_url;
   $path = current_path();
   if ($path == 'admin/mapply' || $path == 'admin/mapply/settings') {
     $page['content']['#sorted'] = false;
     $page['content']['mapply_description'] = array(
       '#markup' => "<div class='mapply'><div class='header'><img class='logo' src='" .
-        drupal_get_path('module', 'mapply') . "/imgs/logo2.png'/></div><hr />" .
+        $base_url . "/" . drupal_get_path('module', 'mapply') . "/imgs/logo2.png'/></div><hr />" .
         "<div class='instructions'><p>Step 1 - First we'll need to have a Mapply account. If you don't have one already, " .
         "you can sign up for a <a href='http://mapply.net'>free 30 day trial here!</a> :-)</p>" .
         "<p>Step 2 - Once you're signed up and inside your Mapply account, navigate to the <a href=\'https://app.mapply.net/settings.php\'>" .
