@@ -37,10 +37,12 @@ function mapply_menu() {
  * 
  */
 function mapply_configuration() {
+  drupal_add_css(drupal_get_path('module', 'mapply') . '/css/mapply.css');
   return theme('mapply_configuration_template');
 }
 
 function mapply_settings() {
+  drupal_add_css(drupal_get_path('module', 'mapply') . '/css/mapply.css');
   return theme('mapply_settings_template');
 }
 
@@ -87,15 +89,6 @@ function mapply_permission() {
           'description' => t('Users with this permission will be able to administer the Mapply settings page'),
       ),
   );
-}
-
-/**
- * 
- * Hook overlay child initialize implementation.  Ensure the mapply CSS is loaded on the overlay.
- * 
- */
-function mapply_overlay_child_initialize() {
-  drupal_add_css(drupal_get_path('module', 'mapply') . '/css/mapply.css');
 }
 
 /**
