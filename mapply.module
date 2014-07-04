@@ -10,15 +10,14 @@ function mapply_menu() {
   $items['admin/mapply'] = array(
       'title' => 'Mapply Settings',
       'description'       => 'Mapply Settings',
-      'page callback'     => 'drupal_get_form',
+      'page callback'     => 'mapply_settings',
       'page arguments'    => array('mapply_form'),
       'access arguments'  => array('administer mapply'),
   );
   $items['admin/mapply/settings'] = array(
       'title'             => 'Mapply Settings',
       'description'       => 'Mapply Settings',
-      'page callback'     => 'drupal_get_form',
-      'page arguments'    => array('mapply_form'),
+      'page callback'     => 'mapply_settings',
       'access arguments'  => array('administer mapply'),
       'type'              => MENU_DEFAULT_LOCAL_TASK,
   );
@@ -26,7 +25,6 @@ function mapply_menu() {
       'title'             => 'Mapply Configuration',
       'description'       => 'Mapply Configuration',
       'page callback'     => 'mapply_configuration',
-      'page arguments'    => array('mapply_form'),
       'access arguments'  => array('administer mapply'),
       'type'              => MENU_LOCAL_TASK,
   );
@@ -39,7 +37,42 @@ function mapply_menu() {
  * 
  */
 function mapply_configuration() {
-  return array();
+  return theme('mapply_configuration_template');
+}
+
+function mapply_settings() {
+  return theme('mapply_settings_template');
+}
+
+
+function mapply_settings_form($form_state) {
+  $form['mapply_api_key'] = array(
+    '#type'           => 'textfield',
+    '#title'          => 'Mapply API Key',
+    '#size'           => 45,
+    '#maxlength'      => 60,
+    '#required'       => TRUE,
+    '#default_value'  => variable_get('mapply_api_key'),
+  );
+  $form['mapply_google_api_key'] = array(
+    '#type'           => 'textfield',
+    '#title'          => 'Google API Key used for Mapply',
+    '#size'           => 45,
+    '#maxlength'      => 60,
+    '#required'       => TRUE,
+    '#default_value'  => variable_get('mapply_google_api_key'),
+  );
+  $form['mapply_display_powered_by'] = array(
+    '#type'           => 'checkbox',
+    '#title'          => 'Display Powered by message',
+    '#default_value'  => variable_get('mapply_display_powered_by'),
+  );
+  $form['mapply_form_submit'] = array(
+    '#type'   => 'submit',
+    '#value'  => t('Save Settings'),
+  );
+  $form['#submit'] = array('mapply_form_submit');
+  return $form;
 }
 
 /**
@@ -67,73 +100,11 @@ function mapply_overlay_child_initialize() {
 
 /**
  * 
- * Hook page build implementation.  Ensure the Mapply content is loaded only on the mapply admin urls.
- * 
- */
-function mapply_page_build(&$page) {
-  global $base_url;
-  $path = current_path();
-  if ($path == 'admin/mapply' || $path == 'admin/mapply/settings') {
-    $page['content']['#sorted'] = false;
-    $page['content']['mapply_description'] = array(
-      '#markup' => "<div class='mapply'><div class='header'><img class='logo' src='" .
-        $base_url . "/" . drupal_get_path('module', 'mapply') . "/imgs/logo2.png'/></div><hr />" .
-        "<div class='instructions'><p>Step 1 - First we'll need to have a Mapply account. If you don't have one already, " .
-        "you can sign up for a <a href='http://mapply.net'>free 30 day trial here!</a> :-)</p>" .
-        "<p>Step 2 - Once you're signed up and inside your Mapply account, navigate to the <a href=\'https://app.mapply.net/settings.php\'>" .
-        "API setup page</a> to grab your Mapply and Google Map API keys to populate the fields below.</p>" .
-        '<p>Step 3 - Once you have all of your <a href=\'https://app.mapply.net/admin.php\'>stores setup</a> in your Mapply account,' .
-        ' you can insert your map on any page by using the [mapply/] shortcode.</p>' .
-        '<p>Step 4 - Your content types will need to be configured to allow the [mapply/] shortcode.  This setting is disabled by default,' .
-        " but can be <a href='?q=#overlay=admin/config/content/formats'>re-enabled here</a>." .
-        '<p>Step 5 - Your content types will need to be able to allow a script tag.  This is disabled by default, but moving the' .
-        "shortcode filter to the bottom of the 'Filter Processing Order' for each of your content types" .
-        "<a href='?q=#overlay=admin/config/content/formats'>listed here</a> should allow it to work as expected." .
-        '</div></div>',
-      '#weight' => 0,
-    );
-  }
-  elseif ($path == 'admin/mapply/configure') {
-    $page['content']['#sorted'] = false;
-    $page['content']['mapply_iframe'] = array(
-      '#markup' => "<div class='mapply configure'><iframe src='https://app.mapply.net/'></iframe></div>",
-      '#weight' => 0,
-    );
-  }
-}
-
-/**
- * 
- * Hook form implementation.  Add Mapply form elements to the form.
+ * Hook form implementation.
  * 
  */
 function mapply_form($form, &$form_state) {
-  $form['mapply_api_key'] = array(
-    '#type'           => 'textfield',
-    '#title'          => 'Mapply API Key',
-    '#size'           => 45,
-    '#maxlength'      => 60,
-    '#required'       => TRUE,
-    '#default_value'  => variable_get('mapply_api_key'),
-  );
-  $form['mapply_google_api_key'] = array(
-    '#type'           => 'textfield',
-    '#title'          => 'Google API Key used for Mapply',
-    '#size'           => 45,
-    '#maxlength'      => 60,
-    '#required'       => TRUE,
-    '#default_value'  => variable_get('mapply_google_api_key'),
-  );
-  $form['mapply_display_powered_by'] = array(
-    '#type'           => 'checkbox',
-    '#title'          => 'Display Powered by message',
-    '#default_value'  => variable_get('mapply_display_powered_by'),
-  );
-  $form['mapply_form_submit'] = array(
-    '#type'   => 'submit',
-    '#value'  => t('Save Settings'),
-  );
-  return $form;
+  return drupal_get_form("mapply_settings_form");
 }
 
 /**
@@ -161,7 +132,6 @@ function mapply_form_submit($form, &$form_state) {
   if (variable_get('mapply_display_powered_by') && variable_get('mapply_powered_by') == '') {
     update_powered_by_message();
   }
-  mapply_form($form, $form_state);
 }
 
 /**
@@ -187,10 +157,10 @@ function update_powered_by_message() {
  */
 function mapply_shortcode_info() {
   $shortcodes['mapply'] = array(
-      'title' => t('Mapply'),
-      'description' => t('Replace the given text formatted like as a mapply.'),
-      'process callback' => 'mapply_shortcode_mapply',
-      'tips callback' => 'mapply_shortcode_mapply_tip',
+    'title' => t('Mapply'),
+    'description' => t('Replace the given text formatted like as a mapply.'),
+    'process callback' => 'mapply_shortcode_mapply',
+    'tips callback' => 'mapply_shortcode_mapply_tip',
   );
   return $shortcodes;
 }
@@ -203,7 +173,13 @@ function mapply_shortcode_info() {
 function mapply_theme() {
   return array(
       'shortcode_mapply' => array(
-          'variables' => array('mapply_api_key' => variable_get('mapply_api_key'), 'google_api_key' => variable_get('google_api_key'), 'class' => 'mapply'),
+        'variables' => array('mapply_api_key' => variable_get('mapply_api_key'), 'google_api_key' => variable_get('google_api_key'), 'class' => 'mapply'),
+      ),
+      'mapply_configuration_template' => array(
+        'template' => 'iframe',
+      ),
+      'mapply_settings_template' => array(
+        'template' => 'settings',
       ),
   );
 }
