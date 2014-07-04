@@ -122,6 +122,11 @@ function mapply_form_submit($form, &$form_state) {
   mapply_form($form, $form_state);
 }
 
+/**
+ * 
+ * Get the current 'powered by' message from the Mapply server and store it in a local variable for easy access.
+ * 
+ */
 function update_powered_by_message() {
   $url = 'https://app.mapply.net/front-end/frontend_json.php?api_key=' . variable_get('mapply_api_key') . '&action=get_powered_by';
   $channel = curl_init($url);
@@ -133,22 +138,25 @@ function update_powered_by_message() {
 }
 
 /**
+ * 
  * Implementation of hook_shortcode_info().
  * Using the same formatting as hook_filter_info()
+ * 
  */
 function mapply_shortcode_info() {
   $shortcodes['mapply'] = array(
       'title' => t('Mapply'),
       'description' => t('Replace the given text formatted like as a mapply.'),
       'process callback' => 'mapply_shortcode_mapply',
-      'attributes callback' => 'mapply_mapply_attributes',
       'tips callback' => 'mapply_shortcode_mapply_tip',
   );
   return $shortcodes;
 }
 
 /**
+ * 
  * Implementation of hook_theme().
+ * 
  */
 function mapply_theme() {
   return array(
@@ -175,9 +183,15 @@ function mapply_shortcode_mapply($attrs, $text) {
   return theme('shortcode_mapply', array('class' => $class));
 }
 
+/**
+ * 
+ * Provide the replacement script for the mapply shortcode.
+ * 
+ * @param $vars
+ */
 function theme_shortcode_mapply($vars) {
   if (variable_get('mapply_api_key') == '' || variable_get('mapply_google_api_key') == '') {
-    return 'Please setup your mapply api key and google api key';
+    return t('Please setup your mapply api key and google api key');
   }
   else {
     $link = '';
@@ -207,8 +221,4 @@ function mapply_shortcode_mapply_tip($format, $long) {
   }
 
   return implode(' ', $output);
-}
-
-function mapply_mapply_attributes() {
-
 }
