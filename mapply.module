@@ -1,9 +1,9 @@
 <?php
 
 /**
- * 
+ *
  * Hook menu implementation.
- * 
+ *
  */
 function mapply_menu() {
   $items = array();
@@ -107,7 +107,7 @@ function mapply_form($form, &$form_state) {
  */
 function mapply_install() {
   variable_set('mapply_display_powered_by', true);
-  update_powered_by_message();
+  mapply_update_powered_by_message();
 }
 
 /**
@@ -123,7 +123,7 @@ function mapply_form_submit($form, &$form_state) {
   variable_set('mapply_display_powered_by', $form_state['values']['mapply_display_powered_by']);
 
   if (variable_get('mapply_display_powered_by') && variable_get('mapply_powered_by') == '') {
-    update_powered_by_message();
+    mapply_update_powered_by_message();
   }
 }
 
@@ -132,7 +132,7 @@ function mapply_form_submit($form, &$form_state) {
  * Get the current 'powered by' message from the Mapply server and store it in a local variable for easy access.
  * 
  */
-function update_powered_by_message() {
+function mapply_update_powered_by_message() {
   $url = 'https://app.mapply.net/front-end/frontend_json.php?api_key=' . variable_get('mapply_api_key') . '&action=get_powered_by';
   $channel = curl_init($url);
   curl_setopt($channel, CURLOPT_RETURNTRANSFER, 1);
@@ -195,9 +195,9 @@ function mapply_shortcode_mapply($attrs, $text) {
 }
 
 /**
- * 
+ *
  * Provide the replacement script for the mapply shortcode.
- * 
+ *
  * @param $vars
  */
 function theme_shortcode_mapply($vars) {
