@@ -1,3 +1,8 @@
+<?php /**
+ * Adds Content to the settings page where users specify their Mapply and Google Maps API keys.
+ * These are then used by the mapply.module file when replacing the shortcode.
+ */ ?>
+
 <div class='mapply'>
   <div class='header'>
     <img class='logo' src='/<?php echo drupal_get_path('module', 'mapply'); ?>/imgs/logo2.png'/>
@@ -15,7 +20,7 @@
     </p>
     <p>
       Step 3 - Once you have all of your <a href='https://app.mapply.net/admin.php'>
-      stores setup</a> in your Mapply account, you can insert your map on any
+        stores setup</a> in your Mapply account, you can insert your map on any
       page by using the [mapply/] shortcode.
     </p>
     <p>

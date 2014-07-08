@@ -32,21 +32,30 @@ function mapply_menu() {
 }
 
 /**
- * 
+ *
  * Page callback function required for the mapply configuration url.
- * 
+ *
  */
 function mapply_configuration() {
   drupal_add_css(drupal_get_path('module', 'mapply') . '/css/mapply.css');
   return theme('mapply_configuration_template');
 }
 
+/**
+ *
+ * Page callback function for the Mapply settings url.
+ *
+ */
 function mapply_settings() {
   drupal_add_css(drupal_get_path('module', 'mapply') . '/css/mapply.css');
   return theme('mapply_settings_template');
 }
 
-
+/**
+ *
+ * Configures the form used by the settings page.
+ *
+ */
 function mapply_settings_form($form_state) {
   $form['mapply_api_key'] = array(
     '#type'           => 'textfield',
@@ -78,9 +87,9 @@ function mapply_settings_form($form_state) {
 }
 
 /**
- * 
+ *
  * Permission hook implementation.  Define the administer mapply permission which is required to see the admin pages for mapply.
- * 
+ *
  */
 function mapply_permission() {
   return array(
@@ -92,28 +101,28 @@ function mapply_permission() {
 }
 
 /**
- * 
+ *
  * Hook form implementation.
- * 
+ *
  */
 function mapply_form($form, &$form_state) {
   return drupal_get_form("mapply_settings_form");
 }
 
 /**
- * 
+ *
  * Hook install implementation.
- * 
+ *
  */
 function mapply_install() {
-  variable_set('mapply_display_powered_by', true);
+  variable_set('mapply_display_powered_by', TRUE);
   mapply_update_powered_by_message();
 }
 
 /**
- * 
+ *
  * Handles form submission
- * 
+ *
  * @param $form
  * @param $form_state
  */
@@ -128,9 +137,9 @@ function mapply_form_submit($form, &$form_state) {
 }
 
 /**
- * 
+ *
  * Get the current 'powered by' message from the Mapply server and store it in a local variable for easy access.
- * 
+ *
  */
 function mapply_update_powered_by_message() {
   $url = 'https://app.mapply.net/front-end/frontend_json.php?api_key=' . variable_get('mapply_api_key') . '&action=get_powered_by';
@@ -143,10 +152,9 @@ function mapply_update_powered_by_message() {
 }
 
 /**
- * 
- * Implementation of hook_shortcode_info().
- * Using the same formatting as hook_filter_info()
- * 
+ *
+ * Implementation of shortcode_info() as setup by the Shortcode module.
+ *
  */
 function mapply_shortcode_info() {
   $shortcodes['mapply'] = array(
@@ -218,8 +226,8 @@ function theme_shortcode_mapply($vars) {
  *
  * Setup the text for the tip on how to use the mapply shortcode.
  *
- * @param $attrs
- * @param $text
+ * @param $format
+ * @param $long
  */
 function mapply_shortcode_mapply_tip($format, $long) {
   $output = array();
