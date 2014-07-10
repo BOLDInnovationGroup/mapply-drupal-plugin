@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Provides a shortcode that is replaced by a Mapply store locator map
+ */
 
 /**
  *
