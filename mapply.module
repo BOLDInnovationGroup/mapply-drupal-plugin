@@ -104,8 +104,10 @@ function mapply_form($form, &$form_state) {
 /**
  * Handles form submission.
  *
- * @param array $form Form elements.
- * @param array $form_state State of the form.
+ * @param array $form
+ *   Form elements.
+ * @param array $form_state
+ *   State of the form.
  */
 function mapply_form_submit(array $form, array &$form_state) {
   variable_set('mapply_api_key', $form_state['values']['mapply_api_key']);
@@ -168,7 +170,7 @@ function mapply_theme() {
  * Replace a given text with a Mapply a map.
  *
  * @param string $attrs
- *   Attributes from the shortcode
+ *   Attributes from the shortcode.
  * @param $text
  *   Text is not used in this function.
  */
@@ -186,7 +188,7 @@ function mapply_shortcode_mapply($attrs, $text) {
 
 /**
  * Provide the replacement script for the mapply shortcode.
- * 
+ *
  * @param array $vars
  */
 function theme_shortcode_mapply(array $vars) {
