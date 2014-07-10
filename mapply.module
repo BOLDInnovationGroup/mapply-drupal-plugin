@@ -190,6 +190,7 @@ function mapply_shortcode_mapply($attrs, $text) {
  * Provide the replacement script for the mapply shortcode.
  *
  * @param array $vars
+ *   Contains an array of parameters.
  */
 function theme_shortcode_mapply(array $vars) {
   if (variable_get('mapply_api_key') == '' || variable_get('mapply_google_api_key') == '') {
@@ -209,8 +210,9 @@ function theme_shortcode_mapply(array $vars) {
  * Setup the text for the tip on how to use the mapply shortcode.
  *
  * @param object $format
- * The content format
+ *   The content format.
  * @param bool $long
+ *   Long determines if the long or short tip (aka hint) should be shown.
  */
 function mapply_shortcode_mapply_tip($format, $long) {
   $output = array();
