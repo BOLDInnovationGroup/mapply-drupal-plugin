@@ -166,10 +166,12 @@ function mapply_theme() {
 
 /**
  * Replace a given text with a Mapply a map.
- * @param array $attrs attributes from the shortcode
+ * 
+ * @param array $attrs
+ * Attributes from the shortcode
  * @param $text
  */
-function mapply_shortcode_mapply($attrs, $text) {
+function mapply_shortcode_mapply(array $attrs, $text) {
   $attrs = shortcode_attrs(
     array(
       'class' => 'mapply',
@@ -202,10 +204,11 @@ function theme_shortcode_mapply($vars) {
 /**
  * Setup the text for the tip on how to use the mapply shortcode.
  *
- * @param object $format the content format
+ * @param object $format
+ * The content format
  * @param bool $long
  */
-function mapply_shortcode_mapply_tip($format, $long) {
+function mapply_shortcode_mapply_tip($format, bool $long) {
   $output = array();
   $output[] = '<p><strong>' . t('[mapply/]') . '</strong> ';
   if ($long) {
