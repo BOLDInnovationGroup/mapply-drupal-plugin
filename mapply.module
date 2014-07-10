@@ -171,7 +171,7 @@ function mapply_theme() {
  *
  * @param string $attrs
  *   Attributes from the shortcode.
- * @param null $text
+ * @param string $text
  *   Text is not used in this function.  Only value passed is null.
  */
 function mapply_shortcode_mapply($attrs, $text) {
