@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Mapply module installation file
+ * Mapply module installation file.
  */
 
 //require the mapply.module file as it contains the mapply_update_powered_by_message function
