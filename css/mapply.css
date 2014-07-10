@@ -1,26 +1,26 @@
 #content {
-    width: 1200px;
+  width: 1200px;
 }
 
 .mapply .header img {
-    height:35px;
-    margin-top:16px;
-    margin-left:75px;
+  height:35px;
+  margin-top:16px;
+  margin-left:75px;
 }
 .mapply .header {
-    background:url('../imgs/banner-bg.jpg') center center no-repeat;
-    height:75px;
-    margin-right:auto;
-    margin-top:-20px;
+  background:url('../imgs/banner-bg.jpg') center center no-repeat;
+  height:75px;
+  margin-right:auto;
+  margin-top:-20px;
 }
 
 .mapply.configure {
-    min-width:1200px;
-    min-height:600px;
+  min-width:1200px;
+  min-height:600px;
 }
 .mapply.configure iframe {
-    min-width:1200px;
-    min-height:600px;
+  min-width:1200px;
+  min-height:600px;
 }
 .logo {
   padding: 15px;

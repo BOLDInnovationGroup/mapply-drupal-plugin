@@ -193,9 +193,11 @@ function mapply_theme() {
  * @param $text
  */
 function mapply_shortcode_mapply($attrs, $text) {
-  $attrs = shortcode_attrs(array(
+  $attrs = shortcode_attrs(
+    array(
       'class' => 'mapply',
-          ), $attrs
+    ),
+    $attrs
   );
 
   $class = shortcode_add_class($attrs['class'], 'mapply');
