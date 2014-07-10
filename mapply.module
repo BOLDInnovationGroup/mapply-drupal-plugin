@@ -5,9 +5,7 @@
  */
 
 /**
- *
  * Hook menu implementation.
- *
  */
 function mapply_menu() {
   $items = array();
@@ -36,9 +34,7 @@ function mapply_menu() {
 }
 
 /**
- *
  * Page callback function required for the mapply configuration url.
- *
  */
 function mapply_configuration() {
   drupal_add_css(drupal_get_path('module', 'mapply') . '/css/mapply.css');
@@ -46,9 +42,7 @@ function mapply_configuration() {
 }
 
 /**
- *
  * Page callback function for the Mapply settings url.
- *
  */
 function mapply_settings() {
   drupal_add_css(drupal_get_path('module', 'mapply') . '/css/mapply.css');
@@ -56,9 +50,7 @@ function mapply_settings() {
 }
 
 /**
- *
  * Configures the form used by the settings page.
- *
  */
 function mapply_settings_form($form_state) {
   $form['mapply_api_key'] = array(
@@ -91,9 +83,7 @@ function mapply_settings_form($form_state) {
 }
 
 /**
- *
  * Permission hook implementation.  Define the administer mapply permission which is required to see the admin pages for mapply.
- *
  */
 function mapply_permission() {
   return array(
@@ -105,18 +95,15 @@ function mapply_permission() {
 }
 
 /**
- *
  * Hook form implementation.
- *
  */
 function mapply_form($form, &$form_state) {
   return drupal_get_form("mapply_settings_form");
 }
 
 /**
- *
  * Handles form submission
- *
+ * 
  * @param $form
  * @param $form_state
  */
@@ -131,9 +118,7 @@ function mapply_form_submit($form, &$form_state) {
 }
 
 /**
- *
  * Get the current 'powered by' message from the Mapply server and store it in a local variable for easy access.
- *
  */
 function mapply_update_powered_by_message() {
   $url = 'https://app.mapply.net/front-end/frontend_json.php?api_key=' . variable_get('mapply_api_key') . '&action=get_powered_by';
@@ -146,9 +131,7 @@ function mapply_update_powered_by_message() {
 }
 
 /**
- *
  * Implementation of shortcode_info() as setup by the Shortcode module.
- *
  */
 function mapply_shortcode_info() {
   $shortcodes['mapply'] = array(
@@ -161,9 +144,7 @@ function mapply_shortcode_info() {
 }
 
 /**
- *
  * Implements hook_theme().
- *
  */
 function mapply_theme() {
   return array(
@@ -184,7 +165,6 @@ function mapply_theme() {
 }
 
 /**
- *
  * Replace a given text with a Mapply a map.
  *
  * @param array $attrs attributes from the shortcode
@@ -203,7 +183,6 @@ function mapply_shortcode_mapply($attrs, $text) {
 }
 
 /**
- *
  * Provide the replacement script for the mapply shortcode.
  *
  * @param $vars
@@ -223,11 +202,10 @@ function theme_shortcode_mapply($vars) {
 }
 
 /**
- *
  * Setup the text for the tip on how to use the mapply shortcode.
  *
  * @param object $format the content format
- * @param boolean $long
+ * @param bool $long
  */
 function mapply_shortcode_mapply_tip($format, $long) {
   $output = array();

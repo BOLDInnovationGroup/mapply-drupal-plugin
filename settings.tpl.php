@@ -1,7 +1,9 @@
-<?php /**
+<?php
+/**
  * Adds Content to the settings page where users specify their Mapply and Google Maps API keys.
  * These are then used by the mapply.module file when replacing the shortcode.
- */ ?>
+ */
+?>
 
 <div class='mapply'>
   <div class='header'>
