@@ -115,16 +115,6 @@ function mapply_form($form, &$form_state) {
 
 /**
  *
- * Hook install implementation.
- *
- */
-function mapply_install() {
-  variable_set('mapply_display_powered_by', TRUE);
-  mapply_update_powered_by_message();
-}
-
-/**
- *
  * Handles form submission
  *
  * @param $form

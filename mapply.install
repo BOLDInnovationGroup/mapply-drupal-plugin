@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Mapply module installation file
+ */
+
+//require the mapply.module file as it contains the mapply_update_powered_by_message function
+require_once 'mapply.module';
+
+/**
+ *
+ * Hook install implementation.
+ *
+ */
+function mapply_install() {
+  variable_set('mapply_display_powered_by', TRUE);
+  mapply_update_powered_by_message();
+}
