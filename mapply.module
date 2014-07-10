@@ -162,13 +162,17 @@ function mapply_shortcode_info() {
 
 /**
  *
- * Implementation of hook_theme().
+ * Implements hook_theme().
  *
  */
 function mapply_theme() {
   return array(
       'shortcode_mapply' => array(
-        'variables' => array('mapply_api_key' => variable_get('mapply_api_key'), 'google_api_key' => variable_get('google_api_key'), 'class' => 'mapply'),
+        'variables' => array(
+          'mapply_api_key' => variable_get('mapply_api_key'),
+          'google_api_key' => variable_get('google_api_key'),
+          'class' => 'mapply'
+        ),
       ),
       'mapply_configuration_template' => array(
         'template' => 'iframe',
