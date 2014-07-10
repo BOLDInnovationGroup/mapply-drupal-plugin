@@ -166,12 +166,13 @@ function mapply_theme() {
 
 /**
  * Replace a given text with a Mapply a map.
- * 
- * @param array $attrs
- * Attributes from the shortcode
+ *
+ * @param string $attrs
+ *   Attributes from the shortcode
  * @param $text
+ *   Text is not used in this function.
  */
-function mapply_shortcode_mapply(array $attrs, $text) {
+function mapply_shortcode_mapply($attrs, $text) {
   $attrs = shortcode_attrs(
     array(
       'class' => 'mapply',
@@ -185,9 +186,10 @@ function mapply_shortcode_mapply(array $attrs, $text) {
 
 /**
  * Provide the replacement script for the mapply shortcode.
- * @param $vars
+ * 
+ * @param array $vars
  */
-function theme_shortcode_mapply($vars) {
+function theme_shortcode_mapply(array $vars) {
   if (variable_get('mapply_api_key') == '' || variable_get('mapply_google_api_key') == '') {
     return t('Please setup your mapply api key and google api key');
   }
@@ -208,7 +210,7 @@ function theme_shortcode_mapply($vars) {
  * The content format
  * @param bool $long
  */
-function mapply_shortcode_mapply_tip($format, bool $long) {
+function mapply_shortcode_mapply_tip($format, $long) {
   $output = array();
   $output[] = '<p><strong>' . t('[mapply/]') . '</strong> ';
   if ($long) {
