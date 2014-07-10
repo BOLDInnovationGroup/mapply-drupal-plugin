@@ -83,8 +83,7 @@ function mapply_settings_form($form_state) {
 }
 
 /**
- * Permission hook implementation. Define the administer mapply permission 
- * which is required to see the admin pages for mapply.
+ * Permission hook implementation. Define the administer mapply permission which is required to see the admin pages for mapply.
  */
 function mapply_permission() {
   return array(
@@ -105,8 +104,8 @@ function mapply_form($form, &$form_state) {
 /**
  * Handles form submission.
  *
- * @param $form
- * @param $form_state
+ * @param array $form
+ * @param array $form_state
  */
 function mapply_form_submit($form, &$form_state) {
   variable_set('mapply_api_key', $form_state['values']['mapply_api_key']);
