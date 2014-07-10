@@ -161,9 +161,9 @@ function mapply_shortcode_info() {
 }
 
 /**
- * 
+ *
  * Implementation of hook_theme().
- * 
+ *
  */
 function mapply_theme() {
   return array(
